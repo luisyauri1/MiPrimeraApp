@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type TarjetaProps = {
@@ -16,6 +17,7 @@ function TarjetaPresentacion({ nombre, descripcion }: TarjetaProps) {
 }
 
 function App() {
+  const [contador, setContador] = useState(0);
   return (
     <SafeAreaView style={styles.container}>
       <TarjetaPresentacion
@@ -26,6 +28,22 @@ function App() {
         nombre="Desarrollador Senior"
         descripcion="Tambien practico componentes reutilizables."
       />
+
+      <View style={styles.card}>
+        <Text style={styles.titulo}>Contador: {contador}</Text>
+        <View style={styles.filabotones}>
+          <Pressable
+            style={styles.boton}
+            onPress={() => setContador(contador + 1)}
+          >
+            <Text style={styles.textoBoton}>+1</Text>
+          </Pressable>
+
+          <Pressable style={styles.boton} onPress={() => setContador(0)}>
+            <Text style={styles.textoBoton}>Reiniciar</Text>
+          </Pressable>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -55,6 +73,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#334155',
     lineHeight: 22,
+  },
+  filabotones: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 8,
+  },
+  boton: {
+    backgroundColor: '#0F172A',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+  },
+  textoBoton: {
+    color: '#FFFFFF',
+    fontWeight: '700',
   },
 });
 
