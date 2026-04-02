@@ -1,10 +1,15 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type TarjetaProps = {
   nombre: string;
   descripcion: string;
+};
+
+type Tarea = {
+  id: string;
+  titulo: string;
 };
 
 function TarjetaPresentacion({ nombre, descripcion }: TarjetaProps) {
@@ -21,71 +26,94 @@ function App() {
   const [mostrarTarjeta, setMostrarTarjeta] = useState(true);
   const [logueado, setLogueado] = useState(false);
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <TarjetaPresentacion
-        nombre="Luis"
-        descripcion="Estoy aprendiendo React Native paso a paso con props."
-      />
-      <TarjetaPresentacion
-        nombre="Desarrollador Senior"
-        descripcion="Tambien practico componentes reutilizables."
-      />
+  const tareas: Tarea[] = [
+    { id: '1', titulo: 'Aprender React Native' },
+    { id: '2', titulo: 'Practicar con componentes' },
+    { id: '3', titulo: 'Crear una app de tareas' },
+    { id: '4', titulo: 'Publicar en la Play Store' },
+  ];
 
-      <View style={styles.card}>
-        <Text style={styles.titulo}>Contador: {contador}</Text>
-        <View style={styles.filabotones}>
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <TarjetaPresentacion
+          nombre="Luis"
+          descripcion="Estoy aprendiendo React Native paso a paso con props."
+        />
+        <TarjetaPresentacion
+          nombre="Desarrollador Senior"
+          descripcion="Tambien practico componentes reutilizables."
+        />
+
+        <View style={styles.card}>
+          <Text style={styles.titulo}>Contador: {contador}</Text>
+          <View style={styles.filabotones}>
+            <Pressable
+              style={styles.boton}
+              onPress={() => setContador(contador + 1)}
+            >
+              <Text style={styles.textoBoton}>+1</Text>
+            </Pressable>
+
+            <Pressable style={styles.boton} onPress={() => setContador(0)}>
+              <Text style={styles.textoBoton}>Reiniciar</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.titulo}>Evento onPress</Text>
           <Pressable
             style={styles.boton}
-            onPress={() => setContador(contador + 1)}
+            onPress={() => setMostrarTarjeta(!mostrarTarjeta)}
           >
-            <Text style={styles.textoBoton}>+1</Text>
+            <Text style={styles.textoBoton}>
+              {mostrarTarjeta ? 'Ocultar Tarjeta' : 'Mostrar Tarjeta'}
+            </Text>
           </Pressable>
-
-          <Pressable style={styles.boton} onPress={() => setContador(0)}>
-            <Text style={styles.textoBoton}>Reiniciar</Text>
-          </Pressable>
+          {mostrarTarjeta ? (
+            <Text style={styles.mensaje}>
+              Excelente, ya manejas eventos basicos.
+            </Text>
+          ) : null}
         </View>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.titulo}>Evento onPress</Text>
-        <Pressable
-          style={styles.boton}
-          onPress={() => setMostrarTarjeta(!mostrarTarjeta)}
-        >
-          <Text style={styles.textoBoton}>
-            {mostrarTarjeta ? 'Ocultar Tarjeta' : 'Mostrar Tarjeta'}
-          </Text>
-        </Pressable>
-        {mostrarTarjeta ? (
-          <Text style={styles.mensaje}>
-            Excelente, ya manejas eventos basicos.
-          </Text>
-        ) : null}
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.titulo}>Renderizado condicional</Text>
-        <Pressable style={styles.boton} onPress={() => setLogueado(!logueado)}>
-          <Text style={styles.textoBoton}>
-            {logueado ? 'Cerrar Sesión' : 'Iniciar Sesión'}
-          </Text>
-        </Pressable>
-        {logueado ? (
-          <Text style={styles.mensajeOk}>Bienvenido, estas logueado.</Text>
-        ) : (
-          <Text style={styles.mensajeInfo}>Por favor, inicia sesión.</Text>
-        )}
-      </View>
+
+        <View style={styles.card}>
+          <Text style={styles.titulo}>Renderizado condicional</Text>
+          <Pressable
+            style={styles.boton}
+            onPress={() => setLogueado(!logueado)}
+          >
+            <Text style={styles.textoBoton}>
+              {logueado ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+            </Text>
+          </Pressable>
+          {logueado ? (
+            <Text style={styles.mensajeOk}>Bienvenido, estas logueado.</Text>
+          ) : (
+            <Text style={styles.mensajeInfo}>Por favor, inicia sesión.</Text>
+          )}
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.titulo}>Lista de Tareas</Text>
+          {tareas.map(tarea => (
+            <View key={tarea.id} style={styles.itemTarea}>
+              <Text style={styles.textoTarea}>{tarea.titulo}</Text>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#F4F7FB',
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  container: {
     padding: 20,
     gap: 12,
   },
@@ -138,6 +166,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#B45309',
     fontWeight: '600',
+  },
+  itemTarea: {
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E8F0',
+  },
+  textoTarea: {
+    fontSize: 16,
+    color: '#0F172A',
   },
 });
 
