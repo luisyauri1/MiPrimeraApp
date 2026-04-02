@@ -19,6 +19,7 @@ function TarjetaPresentacion({ nombre, descripcion }: TarjetaProps) {
 function App() {
   const [contador, setContador] = useState(0);
   const [mostrarTarjeta, setMostrarTarjeta] = useState(true);
+  const [logueado, setLogueado] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,6 +62,19 @@ function App() {
             Excelente, ya manejas eventos basicos.
           </Text>
         ) : null}
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.titulo}>Renderizado condicional</Text>
+        <Pressable style={styles.boton} onPress={() => setLogueado(!logueado)}>
+          <Text style={styles.textoBoton}>
+            {logueado ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+          </Text>
+        </Pressable>
+        {logueado ? (
+          <Text style={styles.mensajeOk}>Bienvenido, estas logueado.</Text>
+        ) : (
+          <Text style={styles.mensajeInfo}>Por favor, inicia sesión.</Text>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -111,6 +125,18 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 16,
     color: '#166534',
+    fontWeight: '600',
+  },
+  mensajeOk: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#166534',
+    fontWeight: '600',
+  },
+  mensajeInfo: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#B45309',
     fontWeight: '600',
   },
 });
