@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -33,6 +33,14 @@ function App() {
   const [mostrarTarjeta, setMostrarTarjeta] = useState(true);
   const [logueado, setLogueado] = useState(false);
   const [nombre, setNombre] = useState('');
+  const [ultimaActualizacion, setUltimaActualizacion] =
+    useState('Aun sin cambios');
+
+  useEffect(() => {
+    console.log('useEffect -> cambio detectado', { contador, nombre });
+    const hora = new Date().toLocaleTimeString();
+    setUltimaActualizacion(`Cambio detectado a las ${hora}`);
+  }, [contador, nombre]);
 
   const tareas: Tarea[] = [
     { id: '1', titulo: 'Aprender React Native' },
@@ -126,6 +134,14 @@ function App() {
           ) : (
             <Text style={styles.placeholder}>Por favor, ingresa tu nombre</Text>
           )}
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.titulo}>useEffect basico</Text>
+          <Text style={styles.parrafo}>
+            Cada vez que cambia el contador o el nombre, se ejecuta useEffect.
+          </Text>
+          <Text style={styles.estadoEffect}>{ultimaActualizacion}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -225,6 +241,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#9CA3AF',
     fontStyle: 'italic',
+  },
+  estadoEffect: {
+    marginTop: 10,
+    fontSize: 15,
+    color: '#1D4ED8',
+    fontWeight: '600',
   },
 });
 
