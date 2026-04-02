@@ -1,15 +1,31 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+type TarjetaProps = {
+  nombre: string;
+  descripcion: string;
+};
+
+function TarjetaPresentacion({ nombre, descripcion }: TarjetaProps) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.titulo}>{nombre}</Text>
+      <Text style={styles.parrafo}>{descripcion}</Text>
+    </View>
+  );
+}
+
 function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.titulo}>Hola, soy Luis</Text>
-        <Text style={styles.parrafo}>
-          Estoy aprendiendo React Native paso a paso con JSX
-        </Text>
-      </View>
+      <TarjetaPresentacion
+        nombre="Luis"
+        descripcion="Estoy aprendiendo React Native paso a paso con props."
+      />
+      <TarjetaPresentacion
+        nombre="Dam"
+        descripcion="Tambien practico componentes reutilizables."
+      />
     </SafeAreaView>
   );
 }
@@ -21,6 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    gap: 12,
   },
   card: {
     width: '100%',
