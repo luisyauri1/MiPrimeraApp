@@ -18,6 +18,8 @@ function TarjetaPresentacion({ nombre, descripcion }: TarjetaProps) {
 
 function App() {
   const [contador, setContador] = useState(0);
+  const [mostrarTarjeta, setMostrarTarjeta] = useState(true);
+
   return (
     <SafeAreaView style={styles.container}>
       <TarjetaPresentacion
@@ -43,6 +45,22 @@ function App() {
             <Text style={styles.textoBoton}>Reiniciar</Text>
           </Pressable>
         </View>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.titulo}>Evento onPress</Text>
+        <Pressable
+          style={styles.boton}
+          onPress={() => setMostrarTarjeta(!mostrarTarjeta)}
+        >
+          <Text style={styles.textoBoton}>
+            {mostrarTarjeta ? 'Ocultar Tarjeta' : 'Mostrar Tarjeta'}
+          </Text>
+        </Pressable>
+        {mostrarTarjeta ? (
+          <Text style={styles.mensaje}>
+            Excelente, ya manejas eventos basicos.
+          </Text>
+        ) : null}
       </View>
     </SafeAreaView>
   );
@@ -88,6 +106,12 @@ const styles = StyleSheet.create({
   textoBoton: {
     color: '#FFFFFF',
     fontWeight: '700',
+  },
+  mensaje: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#166534',
+    fontWeight: '600',
   },
 });
 
