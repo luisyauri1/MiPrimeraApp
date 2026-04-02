@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type TarjetaProps = {
@@ -25,6 +32,7 @@ function App() {
   const [contador, setContador] = useState(0);
   const [mostrarTarjeta, setMostrarTarjeta] = useState(true);
   const [logueado, setLogueado] = useState(false);
+  const [nombre, setNombre] = useState('');
 
   const tareas: Tarea[] = [
     { id: '1', titulo: 'Aprender React Native' },
@@ -103,6 +111,22 @@ function App() {
             </View>
           ))}
         </View>
+
+        <View style={styles.card}>
+          <Text style={styles.titulo}>Formulario</Text>
+          <Text style={styles.label}>Escribe tu nombre:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ingresa tu nombre"
+            value={nombre}
+            onChangeText={setNombre}
+          />
+          {nombre ? (
+            <Text style={styles.saludo}>Hola, {nombre}!</Text>
+          ) : (
+            <Text style={styles.placeholder}>Por favor, ingresa tu nombre</Text>
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -175,6 +199,32 @@ const styles = StyleSheet.create({
   textoTarea: {
     fontSize: 16,
     color: '#0F172A',
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#0F172A',
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    fontSize: 16,
+    color: '#0F172A',
+    marginBottom: 12,
+  },
+  saludo: {
+    fontSize: 16,
+    color: '#166534',
+    fontWeight: '600',
+  },
+  placeholder: {
+    fontSize: 16,
+    color: '#9CA3AF',
+    fontStyle: 'italic',
   },
 });
 
