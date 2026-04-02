@@ -9,7 +9,7 @@ type TarjetaProps = {
 function TarjetaPresentacion({ nombre, descripcion }: TarjetaProps) {
   return (
     <View style={styles.card}>
-      <Text style={styles.titulo}>{nombre}</Text>
+      <Text style={styles.titulo}>Hola soy {nombre}</Text>
       <Text style={styles.parrafo}>{descripcion}</Text>
     </View>
   );
@@ -23,7 +23,7 @@ function App() {
         descripcion="Estoy aprendiendo React Native paso a paso con props."
       />
       <TarjetaPresentacion
-        nombre="Dam"
+        nombre="Desarrollador Senior"
         descripcion="Tambien practico componentes reutilizables."
       />
     </SafeAreaView>
